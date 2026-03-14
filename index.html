@@ -230,6 +230,7 @@ function addJ(txt, stream){ mc++; document.getElementById('sm').textContent=mc; 
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function scrollB(){ msgEl.scrollTop=msgEl.scrollHeight; }
 async function sendMsg(text){
+  stopSpeak();
   addU(text); hist.push({role:'user',content:text}); addThink(); setStream(true); ctrl=new AbortController();
   try{
     var res=await fetch('https://api.groq.com/openai/v1/chat/completions',{ method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+KEY}, body:JSON.stringify({ model:'llama-3.3-70b-versatile', messages:[{role:'system',content:SYSTEM},...hist], max_tokens:1200,temperature:0.7,stream:true }), signal:ctrl.signal });
